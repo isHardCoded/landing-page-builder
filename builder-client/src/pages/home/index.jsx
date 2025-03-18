@@ -1,3 +1,5 @@
+import styles from './home-page.module.scss'
+
 const Home = () => {
 	return (
 		<>
