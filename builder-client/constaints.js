@@ -1,5 +1,7 @@
 const ROUTES = {
 	HOME: '/',
+	LANDING_EDITOR: '/landing-editor',
+	CONTACTS: '/contacts',
 	NOTFOUND: '*',
 }
 

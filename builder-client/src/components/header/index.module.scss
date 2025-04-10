@@ -1,0 +1,48 @@
+@import './../../assets/styles/variables.scss';
+.header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 20px 0;
+
+	border-bottom: 1px solid #c9c9c9;
+
+	nav {
+		ul {
+			display: flex;
+			list-style: none;
+			gap: 30px;
+
+			li {
+				a {
+					text-decoration: none;
+					color: #373737;
+					transition: 0.1s ease all;
+
+					&:hover {
+						color: black;
+					}
+				}
+			}
+		}
+	}
+
+	button {
+		outline: 0;
+		border: 0;
+		border-radius: 3px;
+
+		background-color: $primary-color;
+		color: white;
+		font-size: 14px;
+		padding: 5px 18.5px;
+
+		cursor: pointer;
+
+		transition: 0.1s ease all;
+
+		&:hover {
+			background-color: $h-primary-color;
+		}
+	}
+}
