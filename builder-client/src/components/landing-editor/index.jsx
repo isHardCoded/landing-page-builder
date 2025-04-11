@@ -1,17 +1,22 @@
 import React from 'react'
 import axios from 'axios'
-import { DndProvider } from 'react-dnd'
-import { HTML5Backend } from 'react-dnd-html5-backend'
 import Header from '../header/index'
 import Sidebar from './sidebar/index'
 import Workspace from './workspace/index'
 import styles from './index.module.scss'
+
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
+import { useParams, useNavigate } from 'react-router-dom'
 import { ItemTypes } from '../../utils/itemTypes'
+import { API_BASE } from '../../../constaints'
 
 const LOCAL_STORAGE_KEY = 'landingEditorData'
-const API_URL = 'http://localhost:3001/landingPages'
 
 const LandingEditor = ({ loadSavedLanding }) => {
+	const { id } = useParams()
+	const navigate = useNavigate()
+
 	const [elements, setElements] = React.useState(() => {
 		const savedData = localStorage.getItem(LOCAL_STORAGE_KEY)
 		return savedData ? JSON.parse(savedData) : []
@@ -31,22 +36,70 @@ const LandingEditor = ({ loadSavedLanding }) => {
 		}
 	}, [loadSavedLanding])
 
-	const handleSaveToServer = async () => {
-		const name = prompt('Enter landing page name:')
-		if (!name) return
+	React.useEffect(() => {
+		const loadLanding = async () => {
+			if (id) {
+				try {
+					const response = await axios.get(`${API_BASE}/landingPages/${id}`)
+					setElements(response.data.elements)
+				} catch (error) {
+					console.error('Error loading landing:', error)
+					alert('Error loading landing page')
+				}
+			}
+		}
+		loadLanding()
+	}, [id])
 
+	const handleSaveToServer = async () => {
 		try {
-			await axios.post(API_URL, {
+			const name = prompt(
+				'Enter landing page name:',
+				id ? `Landing ${id}` : 'New Landing'
+			)
+			if (!name) return
+
+			const data = {
 				name,
 				elements,
-				createdAt: new Date().toISOString(),
-			})
-			alert('Landing page saved successfully!')
+				updatedAt: new Date().toISOString(),
+			}
+
+			if (id) {
+				await axios.patch(`${API_BASE}/landingPages/${id}`, data)
+				alert('Landing page updated successfully!')
+			} else {
+				const response = await axios.post(API_URL, {
+					...data,
+					createdAt: new Date().toISOString(),
+				})
+				navigate(`/editor/${response.data.id}`)
+				alert('Landing page saved successfully!')
+			}
 		} catch (error) {
 			console.error('Error saving landing page:', error)
 			alert('Error saving landing page')
 		}
 	}
+
+	React.useEffect(() => {
+		if (id) {
+			const autoSave = async () => {
+				try {
+					await axios.patch(`${API_BASE}/landingPages/${id}`, {
+						elements,
+						updatedAt: new Date().toISOString(),
+					})
+					console.log('Autosaved successfully')
+				} catch (error) {
+					console.error('Autosave error:', error)
+				}
+			}
+
+			const timeoutId = setTimeout(autoSave, 1000)
+			return () => clearTimeout(timeoutId)
+		}
+	}, [elements, id])
 
 	const handleDrop = item => {
 		setElements(prevElements => [
@@ -208,6 +261,7 @@ ${elementsHTML}
 					onDeleteElement={handleDeleteElement}
 					onSave={handleSaveHTML}
 					onSaveToServer={handleSaveToServer}
+					id={id}
 				/>
 				<Workspace
 					elements={elements}

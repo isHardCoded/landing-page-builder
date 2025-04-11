@@ -29,6 +29,8 @@ const Sidebar = ({
 	onColorChange,
 	onDeleteElement,
 	onSave,
+	onSaveToServer,
+	id,
 }) => {
 	const selectedElement = elements.find(el => el.id === selectedElementId)
 	const isColorEditable =
@@ -45,6 +47,9 @@ const Sidebar = ({
 			<SidebarItem type={ItemTypes.IMAGE} name='Image' />
 			<button onClick={onSave} className={styles.saveButton}>
 				Save as HTML
+			</button>
+			<button onClick={onSaveToServer} className={styles.saveButton}>
+				{id ? 'Save Changes' : 'Save New'}
 			</button>
 			{selectedElement && (
 				<div className={styles.propertiesPanel}>

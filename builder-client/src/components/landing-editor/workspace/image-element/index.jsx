@@ -32,7 +32,7 @@ const ImageElement = ({ element, onElementUpdate, onClick }) => {
 			/>
 			<img
 				src={element.content || 'placeholder-image.jpg'}
-				alt='Добавьте изображение'
+				alt='Upload image'
 				style={{
 					width: '200px',
 					height: 'auto',

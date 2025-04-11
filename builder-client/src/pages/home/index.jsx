@@ -6,6 +6,7 @@ import styles from './index.module.scss'
 import TemplateBlockImage from './../../assets/images/template-block-image.png'
 import LandingBlockImage from './../../assets/images/landing-block-image.png'
 import { ROUTES } from '../../../constaints'
+import SavedLandingsList from '../../components/saved-landing-list'
 
 const Home = () => {
 	return (
@@ -44,6 +45,7 @@ const Home = () => {
 						</div>
 					</article>
 				</section>
+				<SavedLandingsList />
 			</main>
 		</>
 	)

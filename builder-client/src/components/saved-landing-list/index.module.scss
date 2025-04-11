@@ -1,0 +1,34 @@
+@import '../../assets/styles/variables.scss';
+
+.landingList {
+	border: 1px solid $border-color;
+	border-radius: 3px;
+
+	display: flex;
+	flex-direction: column;
+
+	max-height: 450px;
+	overflow-y: scroll;
+
+	&:last-child {
+		border-bottom: 0;
+	}
+
+	.landingItem {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 20px;
+		border-bottom: 1px $border-color solid;
+
+		a {
+			background-color: $primary-color;
+			border-radius: 3px;
+			color: white;
+			font-size: 14px;
+			padding: 5px 18.5px;
+
+			text-decoration: none;
+		}
+	}
+}

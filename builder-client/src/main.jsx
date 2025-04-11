@@ -13,6 +13,10 @@ createRoot(document.getElementById('root')).render(
 			<Routes>
 				<Route path={ROUTES.HOME} element={<Home />} />
 				<Route path={ROUTES.LANDING_EDITOR} element={<LandingEditor />} />
+				<Route
+					path={ROUTES.CURRENT_LANDING_EDITOR}
+					element={<LandingEditor />}
+				/>
 				<Route path={ROUTES.NOT_FOUND} element={<NotFound />} />
 			</Routes>
 		</Router>
