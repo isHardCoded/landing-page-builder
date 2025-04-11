@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { ROUTES } from '../constaints'
 import Home from './pages/home'
 
-import Home from './pages/home'
 import LandingEditor from './components/landing-editor'
 import NotFound from './pages/not-found'
 
