@@ -1,10 +1,13 @@
 import React from 'react'
 
-const ImageElement = ({ element, onElementUpdate }) => {
+const ImageElement = ({ element, onElementUpdate, onClick }) => {
 	const fileInputRef = React.useRef(null)
 
-	const handleImageClick = () => {
-		fileInputRef.current.click()
+	const handleImageClick = e => {
+		onClick()
+		if (!element.content) {
+			fileInputRef.current.click()
+		}
 	}
 
 	const handleFileChange = e => {

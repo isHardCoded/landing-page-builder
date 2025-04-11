@@ -23,7 +23,12 @@ const SidebarItem = ({ type, name }) => {
 	)
 }
 
-const Sidebar = ({ selectedElementId, elements, onColorChange }) => {
+const Sidebar = ({
+	selectedElementId,
+	elements,
+	onColorChange,
+	onDeleteElement,
+}) => {
 	const selectedElement = elements.find(el => el.id === selectedElementId)
 	const isColorEditable =
 		selectedElement &&
@@ -38,33 +43,50 @@ const Sidebar = ({ selectedElementId, elements, onColorChange }) => {
 			<SidebarItem type={ItemTypes.BUTTON} name='Button' />
 			<SidebarItem type={ItemTypes.IMAGE} name='Image' />
 
-			{isColorEditable && (
+			{selectedElement && (
 				<div className={styles.propertiesPanel}>
 					<h3>Properties</h3>
-					<div className={styles.colorPicker}>
-						<label>Text Color</label>
-						<input
-							type='color'
-							value={selectedElement.textColor}
-							onChange={e =>
-								onColorChange(selectedElement.id, 'textColor', e.target.value)
-							}
-						/>
-					</div>
-					<div className={styles.colorPicker}>
-						<label>Background Color</label>
-						<input
-							type='color'
-							value={selectedElement.backgroundColor}
-							onChange={e =>
-								onColorChange(
-									selectedElement.id,
-									'backgroundColor',
-									e.target.value
-								)
-							}
-						/>
-					</div>
+
+					{isColorEditable && (
+						<>
+							<div className={styles.colorPicker}>
+								<label>Text Color</label>
+								<input
+									type='color'
+									value={selectedElement.textColor}
+									onChange={e =>
+										onColorChange(
+											selectedElement.id,
+											'textColor',
+											e.target.value
+										)
+									}
+								/>
+							</div>
+							<div className={styles.colorPicker}>
+								<label>Background Color</label>
+								<input
+									type='color'
+									value={selectedElement.backgroundColor}
+									onChange={e =>
+										onColorChange(
+											selectedElement.id,
+											'backgroundColor',
+											e.target.value
+										)
+									}
+								/>
+							</div>
+						</>
+					)}
+
+					<button
+						className={styles.deleteButton}
+						onClick={() => onDeleteElement(selectedElement.id)}
+						style={{ padding: 10 }}
+					>
+						Удалить элемент
+					</button>
 				</div>
 			)}
 		</div>

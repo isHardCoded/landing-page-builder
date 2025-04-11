@@ -121,7 +121,11 @@ const Workspace = ({
 				)
 			case ItemTypes.IMAGE:
 				return (
-					<ImageElement element={element} onElementUpdate={onElementUpdate} />
+					<ImageElement
+						element={element}
+						onElementUpdate={onElementUpdate}
+						onClick={() => setSelectedElementId(element.id)}
+					/>
 				)
 			default:
 				return null

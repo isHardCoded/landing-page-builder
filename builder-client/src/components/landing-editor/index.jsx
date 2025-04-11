@@ -39,6 +39,11 @@ const LandingEditor = () => {
 		])
 	}
 
+	const handleDeleteElement = elementId => {
+		setElements(prev => prev.filter(el => el.id !== elementId))
+		setSelectedElementId(null)
+	}
+
 	const handleUpdateElement = (elementId, newContent) => {
 		setElements(prev =>
 			prev.map(el =>
@@ -64,6 +69,7 @@ const LandingEditor = () => {
 					selectedElementId={selectedElementId}
 					elements={elements}
 					onColorChange={handleColorChange}
+					onDeleteElement={handleDeleteElement}
 				/>
 				<Workspace
 					elements={elements}
