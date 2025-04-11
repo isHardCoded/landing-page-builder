@@ -1,11 +1,20 @@
 import React from 'react'
+import ImageElement from './image-element'
 
 import { useDrop } from 'react-dnd'
 import { ItemTypes } from '../../../utils/itemTypes'
 
 import styles from '../index.module.scss'
 
-const Workspace = ({ elements, onDrop }) => {
+const Workspace = ({
+	elements,
+	onDrop,
+	onElementUpdate,
+	editingElementId,
+	setEditingElementId,
+	newContent,
+	setNewContent,
+}) => {
 	const [{ canDrop, isOver }, drop] = useDrop(() => ({
 		accept: Object.values(ItemTypes),
 		drop: (item, monitor) => {
@@ -17,27 +26,78 @@ const Workspace = ({ elements, onDrop }) => {
 		}),
 	}))
 
+	const handleTextEdit = element => {
+		setEditingElementId(element.id)
+		setNewContent(element.content)
+	}
+
+	const handleBlurOrEnter = (e, element) => {
+		if (e.type === 'keydown' && e.key !== 'Enter') return
+		onElementUpdate(element.id, newContent)
+	}
+
 	const renderElement = element => {
 		const baseStyle = {
 			margin: '10px 0',
 			padding: '10px',
-			border: '1px solid #ddd',
+			cursor: 'text',
 		}
 
 		switch (element.type) {
 			case ItemTypes.HEADER:
-				return <h1 style={baseStyle}>{element.content}</h1>
+				return editingElementId === element.id ? (
+					<input
+						type='text'
+						value={newContent}
+						onChange={e => setNewContent(e.target.value)}
+						onBlur={e => handleBlurOrEnter(e, element)}
+						onKeyDown={e => handleBlurOrEnter(e, element)}
+						autoFocus
+						style={baseStyle}
+					/>
+				) : (
+					<h1 style={baseStyle} onDoubleClick={() => handleTextEdit(element)}>
+						{element.content}
+					</h1>
+				)
 			case ItemTypes.TEXT:
-				return <p style={baseStyle}>{element.content}</p>
+				return editingElementId === element.id ? (
+					<input
+						type='text'
+						value={newContent}
+						onChange={e => setNewContent(e.target.value)}
+						onBlur={e => handleBlurOrEnter(e, element)}
+						onKeyDown={e => handleBlurOrEnter(e, element)}
+						autoFocus
+						style={baseStyle}
+					/>
+				) : (
+					<p style={baseStyle} onDoubleClick={() => handleTextEdit(element)}>
+						{element.content}
+					</p>
+				)
 			case ItemTypes.BUTTON:
-				return <button style={baseStyle}>{element.content}</button>
+				return editingElementId === element.id ? (
+					<input
+						type='text'
+						value={newContent}
+						onChange={e => setNewContent(e.target.value)}
+						onBlur={e => handleBlurOrEnter(e, element)}
+						onKeyDown={e => handleBlurOrEnter(e, element)}
+						autoFocus
+						style={baseStyle}
+					/>
+				) : (
+					<button
+						style={baseStyle}
+						onDoubleClick={() => handleTextEdit(element)}
+					>
+						{element.content}
+					</button>
+				)
 			case ItemTypes.IMAGE:
 				return (
-					<img
-						src='placeholder-image.jpg'
-						alt='placeholder'
-						style={{ ...baseStyle, width: '200px', height: 'auto' }}
-					/>
+					<ImageElement element={element} onElementUpdate={onElementUpdate} />
 				)
 			default:
 				return null
@@ -49,25 +109,31 @@ const Workspace = ({ elements, onDrop }) => {
 	}, [elements])
 
 	return (
-		<div
-			ref={drop}
-			className={styles.workspace}
-			style={{
-				backgroundColor: isOver ? '#f0f0f0' : '#fff',
-				border: canDrop ? '2px dashed #666' : '2px dashed transparent',
-				minHeight: '500px',
-			}}
-		>
-			{elements.length === 0 && (
-				<div className={styles.placeholder}>Перетащите элементы сюда</div>
-			)}
+		<>
+			<div
+				ref={drop}
+				className={styles.workspace}
+				style={{
+					backgroundColor: isOver ? '#f0f0f0' : '#fff',
+					border: canDrop ? '2px dashed #666' : '2px dashed transparent',
+					minHeight: '500px',
+				}}
+			>
+				{elements.length === 0 && (
+					<div className={styles.placeholder}>Перетащите элементы сюда</div>
+				)}
 
-			{elements.map(element => (
-				<div key={element.id} className={styles.element}>
-					{renderElement(element)}
-				</div>
-			))}
-		</div>
+				{elements.map((element, index) => (
+					<div
+						key={element.id}
+						className={styles.element}
+						style={{ order: index }}
+					>
+						{renderElement(element)}
+					</div>
+				))}
+			</div>
+		</>
 	)
 }
 

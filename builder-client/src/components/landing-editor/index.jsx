@@ -8,8 +8,12 @@ import Sidebar from './sidebar/index'
 import Workspace from './workspace/index'
 import styles from './index.module.scss'
 
+import { ItemTypes } from '../../utils/itemTypes'
+
 const LandingEditor = () => {
 	const [elements, setElements] = React.useState([])
+	const [editingElementId, setEditingElementId] = React.useState(null)
+	const [newContent, setNewContent] = React.useState('')
 
 	const handleDrop = item => {
 		setElements(prevElements => [
@@ -17,16 +21,37 @@ const LandingEditor = () => {
 			{
 				id: Date.now(),
 				type: item.type,
-				content: `${item.type} ${prevElements.length + 1}`,
+				content:
+					item.type === ItemTypes.IMAGE
+						? ''
+						: `${item.type} ${prevElements.length + 1}`,
 			},
 		])
 	}
+
+	const handleUpdateElement = (elementId, newContent) => {
+		setElements(prev =>
+			prev.map(el =>
+				el.id === elementId ? { ...el, content: newContent } : el
+			)
+		)
+		setEditingElementId(null)
+	}
+
 	return (
 		<DndProvider backend={HTML5Backend}>
 			<Header />
 			<div className={styles.container}>
 				<Sidebar />
-				<Workspace elements={elements} onDrop={handleDrop} />
+				<Workspace
+					elements={elements}
+					onDrop={handleDrop}
+					onElementUpdate={handleUpdateElement}
+					editingElementId={editingElementId}
+					setEditingElementId={setEditingElementId}
+					newContent={newContent}
+					setNewContent={setNewContent}
+				/>
 			</div>
 		</DndProvider>
 	)

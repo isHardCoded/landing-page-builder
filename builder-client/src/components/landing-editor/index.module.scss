@@ -1,6 +1,6 @@
 .container {
 	display: flex;
-	height: calc(100vh - 60px); /* учитываем высоту header */
+	height: calc(100vh - 60px);
 }
 
 .sidebar {
@@ -36,4 +36,29 @@
 	padding: 10px;
 	border: 1px dashed #ced4da;
 	border-radius: 4px;
+}
+
+.element input {
+	width: 100%;
+	padding: 8px;
+	font-size: 1em;
+	border: 2px solid #007bff;
+	outline: none;
+}
+
+.sidebarItem:hover {
+	background: #f0f0f0;
+}
+
+.element p {
+	&:hover {
+		outline: 2px dashed #007bff;
+	}
+}
+
+.element img {
+	&:hover {
+		opacity: 0.8;
+		transition: opacity 0.2s;
+	}
 }
