@@ -1,14 +1,52 @@
-import styles from './home-page.module.scss'
+import { Link } from 'react-router-dom'
+
+import Header from '../../components/header'
+import styles from './index.module.scss'
+
+import TemplateBlockImage from './../../assets/images/template-block-image.png'
+import LandingBlockImage from './../../assets/images/landing-block-image.png'
+import { ROUTES } from '../../../constaints'
+import SavedLandingsList from '../../components/saved-landing-list'
 
 const Home = () => {
 	return (
 		<>
-			<h1>Главная страница</h1>
-<<<<<<< HEAD
-			<h2>test</h2>
-=======
-			<p>Test</p>
->>>>>>> 776affece6acc0c4c98d00df3e0abc817a468244
+			<Header />
+			<main>
+				<section className={styles.container}>
+					<article className={styles.block}>
+						<img src={TemplateBlockImage} alt='' />
+						<div>
+							<h3>Where to start?</h3>
+							<p>
+								Quickly and efficiently select the most suitable template for
+								their needs.
+							</p>
+							<button>
+								<Link to={{ pathname: ROUTES.LANDING_EDITOR }}>
+									Choose template
+								</Link>
+							</button>
+						</div>
+					</article>
+					<article className={styles.block}>
+						<img src={LandingBlockImage} alt='' />
+						<div>
+							<h3>Create from scratch</h3>
+							<p>
+								Ideal for those who prefer full creative control. Start a
+								project from the ground up.
+							</p>
+							<button>
+								<Link to={{ pathname: ROUTES.LANDING_EDITOR }}>
+									Create landing
+								</Link>
+							</button>
+						</div>
+					</article>
+				</section>
+				<SavedLandingsList />
+			</main>
 		</>
 	)
 }

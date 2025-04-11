@@ -1,0 +1,129 @@
+@import './../../assets/styles/variables.scss';
+
+.container {
+	display: flex;
+	height: calc(100vh - 60px);
+}
+
+button {
+	outline: 0;
+	border: 0;
+
+	border-radius: 3px;
+	cursor: pointer;
+}
+
+.sidebar {
+	width: 250px;
+	padding: 20px;
+	background: #f8f9fa;
+	border-right: 1px solid #dee2e6;
+}
+
+.sidebarItem {
+	padding: 10px;
+	margin: 10px 0;
+	background: #fff;
+	border: 1px solid #dee2e6;
+	border-radius: 4px;
+	cursor: move;
+	transition: all 0.3s;
+}
+
+.sidebarItem:hover {
+	background: #e9ecef;
+}
+
+.workspace {
+	flex: 1;
+	padding: 20px;
+	min-height: 100%;
+	transition: all 0.3s;
+}
+
+.element {
+	margin: 10px 0;
+	padding: 10px;
+	border: 1px dashed #ced4da;
+	border-radius: 4px;
+}
+
+.element input {
+	width: 100%;
+	padding: 8px;
+	font-size: 1em;
+	border: 2px solid #007bff;
+	outline: none;
+}
+
+.sidebarItem:hover {
+	background: #f0f0f0;
+}
+
+.element p {
+	&:hover {
+		outline: 2px dashed #007bff;
+	}
+}
+
+.element img {
+	&:hover {
+		opacity: 0.8;
+		transition: opacity 0.2s;
+	}
+}
+
+.propertiesPanel {
+	margin-top: 20px;
+	padding: 15px;
+	border-top: 1px solid #ddd;
+}
+
+.colorPicker {
+	margin: 10px 0;
+	label {
+		display: block;
+		margin-bottom: 5px;
+	}
+	input[type='color'] {
+		width: 100%;
+		height: 30px;
+	}
+}
+
+.imageContainer {
+	position: relative;
+	margin: 10px 0;
+	padding: 10px;
+	border: 2px dashed #ccc;
+}
+
+.uploadedImage {
+	max-width: 100%;
+	max-height: 200px;
+	display: block;
+}
+
+.uploadPlaceholder {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 8px;
+	padding: 20px;
+}
+
+.saveButton {
+	margin-top: 20px;
+	padding: 10px;
+	width: 100%;
+	background: $primary-color;
+	color: white;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: background 0.3s;
+
+	&:hover {
+		background-color: $h-primary-color;
+	}
+}
