@@ -6,7 +6,8 @@ const ROUTES = {
 	NOT_FOUND: '*',
 }
 
-const API_BASE = 'http://localhost:3001'
+export const API_BASE =
+	import.meta.env.VITE_API_URL || 'https://landing-server-dvh5.onrender.com'
 const DEFAULT_HEADERS = null
 
 export { ROUTES, DEFAULT_HEADERS, API_BASE }
