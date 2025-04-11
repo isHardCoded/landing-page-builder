@@ -40,7 +40,7 @@ const LandingEditor = () => {
 
 	return (
 		<DndProvider backend={HTML5Backend}>
-			<Header />
+			<Header isHome={true} />
 			<div className={styles.container}>
 				<Sidebar />
 				<Workspace

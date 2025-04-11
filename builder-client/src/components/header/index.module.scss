@@ -27,6 +27,17 @@
 		}
 	}
 
+	.headerContent {
+		display: flex;
+		gap: 350px;
+	}
+
+	div {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+	}
+
 	button {
 		outline: 0;
 		border: 0;
