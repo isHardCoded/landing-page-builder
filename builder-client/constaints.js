@@ -6,7 +6,7 @@ const ROUTES = {
 	NOT_FOUND: '*',
 }
 
-export const API_BASE =
+const API_BASE =
 	import.meta.env.VITE_API_URL || 'https://landing-server-dvh5.onrender.com'
 const DEFAULT_HEADERS = null
 
