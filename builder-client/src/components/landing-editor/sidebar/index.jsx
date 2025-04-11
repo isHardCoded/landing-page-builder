@@ -28,6 +28,7 @@ const Sidebar = ({
 	elements,
 	onColorChange,
 	onDeleteElement,
+	onSave,
 }) => {
 	const selectedElement = elements.find(el => el.id === selectedElementId)
 	const isColorEditable =
@@ -42,7 +43,9 @@ const Sidebar = ({
 			<SidebarItem type={ItemTypes.TEXT} name='Text Block' />
 			<SidebarItem type={ItemTypes.BUTTON} name='Button' />
 			<SidebarItem type={ItemTypes.IMAGE} name='Image' />
-
+			<button onClick={onSave} className={styles.saveButton}>
+				Save as HTML
+			</button>
 			{selectedElement && (
 				<div className={styles.propertiesPanel}>
 					<h3>Properties</h3>
@@ -85,7 +88,7 @@ const Sidebar = ({
 						onClick={() => onDeleteElement(selectedElement.id)}
 						style={{ padding: 10 }}
 					>
-						Удалить элемент
+						Delete element
 					</button>
 				</div>
 			)}

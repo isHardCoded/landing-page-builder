@@ -132,10 +132,6 @@ const Workspace = ({
 		}
 	}
 
-	React.useEffect(() => {
-		console.log('Current elements:', elements)
-	}, [elements])
-
 	return (
 		<>
 			<div
@@ -148,7 +144,7 @@ const Workspace = ({
 				}}
 			>
 				{elements.length === 0 && (
-					<div className={styles.placeholder}>Перетащите элементы сюда</div>
+					<div className={styles.placeholder}>Put elements here</div>
 				)}
 
 				{elements.map((element, index) => (

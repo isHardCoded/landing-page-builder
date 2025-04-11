@@ -61,6 +61,117 @@ const LandingEditor = () => {
 		)
 	}
 
+	const escapeHTML = str => {
+		return str
+			.replace(/&/g, '&amp;')
+			.replace(/</g, '&lt;')
+			.replace(/>/g, '&gt;')
+			.replace(/"/g, '&quot;')
+			.replace(/'/g, '&#039;')
+	}
+
+	const generateHTML = () => {
+		const elementsHTML = elements
+			.map(element => {
+				const style = []
+				switch (element.type) {
+					case ItemTypes.HEADER:
+					case ItemTypes.TEXT:
+						style.push('margin: 10px 0', 'padding: 10px', 'cursor: text')
+						style.push(
+							`color: ${element.textColor}`,
+							`background-color: ${element.backgroundColor}`
+						)
+						break
+					case ItemTypes.BUTTON:
+						style.push('margin: 10px 0', 'padding: 10px', 'cursor: pointer')
+						style.push(
+							`color: ${element.textColor}`,
+							`background-color: ${element.backgroundColor}`
+						)
+						style.push('border-radius: 3px', 'border: 0', 'outline: 0')
+						break
+					case ItemTypes.IMAGE:
+						style.push('width: 200px', 'height: auto', 'cursor: pointer')
+						style.push(
+							`border: ${element.content ? 'none' : '2px dashed #ccc'}`
+						)
+						style.push('margin: 10px 0', 'padding: 10px')
+						break
+					default:
+						break
+				}
+				const styleString = style.join('; ')
+
+				let content
+				switch (element.type) {
+					case ItemTypes.IMAGE:
+						content = element.content
+							? `src="${element.content}" alt="Uploaded Image"`
+							: 'src="placeholder-image.jpg" alt="Add image"'
+						break
+					default:
+						content = escapeHTML(element.content)
+				}
+
+				switch (element.type) {
+					case ItemTypes.HEADER:
+						return `<h1 style="${styleString}">${content}</h1>`
+					case ItemTypes.TEXT:
+						return `<p style="${styleString}">${content}</p>`
+					case ItemTypes.BUTTON:
+						return `<button style="${styleString}">${content}</button>`
+					case ItemTypes.IMAGE:
+						return `<img ${content} style="${styleString}" />`
+					default:
+						return ''
+				}
+			})
+			.join('\n')
+
+		return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+			rel="stylesheet"
+		/>
+  <title>Generated Landing Page</title>
+<style>
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+
+	font-family: 'Roboto', sans-serif;
+}
+</style>
+</head>
+<body style="padding: 20px;">
+  <div style="display: flex; flex-direction: column; align-items: start; max-width: 1220px; margin: 0 auto;">
+${elementsHTML}
+</div>
+</body>
+</html>`
+	}
+
+	const handleSaveHTML = () => {
+		const htmlString = generateHTML()
+		const blob = new Blob([htmlString], { type: 'text/html' })
+		const url = URL.createObjectURL(blob)
+		const a = document.createElement('a')
+		a.href = url
+		a.download = 'landing.html'
+		document.body.appendChild(a)
+		a.click()
+		document.body.removeChild(a)
+		URL.revokeObjectURL(url)
+	}
+
 	return (
 		<DndProvider backend={HTML5Backend}>
 			<Header isHome={true} />
@@ -70,6 +181,7 @@ const LandingEditor = () => {
 					elements={elements}
 					onColorChange={handleColorChange}
 					onDeleteElement={handleDeleteElement}
+					onSave={handleSaveHTML}
 				/>
 				<Workspace
 					elements={elements}
