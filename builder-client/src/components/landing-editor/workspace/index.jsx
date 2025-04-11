@@ -14,6 +14,7 @@ const Workspace = ({
 	setEditingElementId,
 	newContent,
 	setNewContent,
+	setSelectedElementId,
 }) => {
 	const [{ canDrop, isOver }, drop] = useDrop(() => ({
 		accept: Object.values(ItemTypes),
@@ -41,6 +42,8 @@ const Workspace = ({
 			margin: '10px 0',
 			padding: '10px',
 			cursor: 'text',
+			color: element.textColor,
+			backgroundColor: element.backgroundColor,
 		}
 
 		switch (element.type) {
@@ -53,10 +56,18 @@ const Workspace = ({
 						onBlur={e => handleBlurOrEnter(e, element)}
 						onKeyDown={e => handleBlurOrEnter(e, element)}
 						autoFocus
-						style={baseStyle}
+						style={{
+							...baseStyle,
+							color: element.textColor,
+							backgroundColor: element.backgroundColor,
+						}}
 					/>
 				) : (
-					<h1 style={baseStyle} onDoubleClick={() => handleTextEdit(element)}>
+					<h1
+						style={baseStyle}
+						onDoubleClick={() => handleTextEdit(element)}
+						onClick={() => setSelectedElementId(element.id)}
+					>
 						{element.content}
 					</h1>
 				)
@@ -69,10 +80,18 @@ const Workspace = ({
 						onBlur={e => handleBlurOrEnter(e, element)}
 						onKeyDown={e => handleBlurOrEnter(e, element)}
 						autoFocus
-						style={baseStyle}
+						style={{
+							...baseStyle,
+							color: element.textColor,
+							backgroundColor: element.backgroundColor,
+						}}
 					/>
 				) : (
-					<p style={baseStyle} onDoubleClick={() => handleTextEdit(element)}>
+					<p
+						style={baseStyle}
+						onDoubleClick={() => handleTextEdit(element)}
+						onClick={() => setSelectedElementId(element.id)}
+					>
 						{element.content}
 					</p>
 				)
@@ -85,12 +104,17 @@ const Workspace = ({
 						onBlur={e => handleBlurOrEnter(e, element)}
 						onKeyDown={e => handleBlurOrEnter(e, element)}
 						autoFocus
-						style={baseStyle}
+						style={{
+							...baseStyle,
+							color: element.textColor,
+							backgroundColor: element.backgroundColor,
+						}}
 					/>
 				) : (
 					<button
 						style={baseStyle}
 						onDoubleClick={() => handleTextEdit(element)}
+						onClick={() => setSelectedElementId(element.id)}
 					>
 						{element.content}
 					</button>

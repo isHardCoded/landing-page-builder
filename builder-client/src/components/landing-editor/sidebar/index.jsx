@@ -23,7 +23,13 @@ const SidebarItem = ({ type, name }) => {
 	)
 }
 
-const Sidebar = () => {
+const Sidebar = ({ selectedElementId, elements, onColorChange }) => {
+	const selectedElement = elements.find(el => el.id === selectedElementId)
+	const isColorEditable =
+		selectedElement &&
+		[ItemTypes.HEADER, ItemTypes.TEXT, ItemTypes.BUTTON].includes(
+			selectedElement.type
+		)
 	return (
 		<div className={styles.sidebar}>
 			<h3>Elements</h3>
@@ -31,6 +37,36 @@ const Sidebar = () => {
 			<SidebarItem type={ItemTypes.TEXT} name='Text Block' />
 			<SidebarItem type={ItemTypes.BUTTON} name='Button' />
 			<SidebarItem type={ItemTypes.IMAGE} name='Image' />
+
+			{isColorEditable && (
+				<div className={styles.propertiesPanel}>
+					<h3>Properties</h3>
+					<div className={styles.colorPicker}>
+						<label>Text Color</label>
+						<input
+							type='color'
+							value={selectedElement.textColor}
+							onChange={e =>
+								onColorChange(selectedElement.id, 'textColor', e.target.value)
+							}
+						/>
+					</div>
+					<div className={styles.colorPicker}>
+						<label>Background Color</label>
+						<input
+							type='color'
+							value={selectedElement.backgroundColor}
+							onChange={e =>
+								onColorChange(
+									selectedElement.id,
+									'backgroundColor',
+									e.target.value
+								)
+							}
+						/>
+					</div>
+				</div>
+			)}
 		</div>
 	)
 }
