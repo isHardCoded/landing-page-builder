@@ -1,0 +1,35 @@
+.container {
+	display: flex;
+	height: 100vh;
+}
+
+.leftPanel {
+	width: 250px;
+	background: #f5f5f5;
+	padding: 20px;
+	border-right: 1px solid #ddd;
+}
+
+.workspace {
+	flex: 1;
+	padding: 20px;
+	background: #fff;
+	overflow: auto;
+}
+
+.element-button {
+	display: block;
+	width: 100%;
+	padding: 10px;
+	margin-bottom: 10px;
+	background: white;
+	border: 1px solid #ddd;
+	cursor: pointer;
+}
+
+.draggable-element {
+	margin-bottom: 15px;
+	padding: 10px;
+	border: 1px dashed #ccc;
+	cursor: move;
+}
