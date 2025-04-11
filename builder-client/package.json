@@ -4,11 +4,12 @@
 	"version": "0.0.0",
 	"type": "module",
 	"scripts": {
-		"start": "react-scripts start",
+		"dev": "vite",
 		"server": "json-server --watch db.json --port 3001",
 		"build": "react-scripts build"
 	},
 	"dependencies": {
+		"axios": "^1.8.4",
 		"json-server": "^1.0.0-beta.3",
 		"react": "^19.0.0",
 		"react-dnd": "^16.0.1",

@@ -1,4 +1,5 @@
 import React from 'react'
+import axios from 'axios'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import Header from '../header/index'
@@ -8,8 +9,9 @@ import styles from './index.module.scss'
 import { ItemTypes } from '../../utils/itemTypes'
 
 const LOCAL_STORAGE_KEY = 'landingEditorData'
+const API_URL = 'http://localhost:3001/landingPages'
 
-const LandingEditor = () => {
+const LandingEditor = ({ loadSavedLanding }) => {
 	const [elements, setElements] = React.useState(() => {
 		const savedData = localStorage.getItem(LOCAL_STORAGE_KEY)
 		return savedData ? JSON.parse(savedData) : []
@@ -22,6 +24,29 @@ const LandingEditor = () => {
 	React.useEffect(() => {
 		localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(elements))
 	}, [elements])
+
+	React.useEffect(() => {
+		if (loadSavedLanding) {
+			setElements(loadSavedLanding.elements)
+		}
+	}, [loadSavedLanding])
+
+	const handleSaveToServer = async () => {
+		const name = prompt('Enter landing page name:')
+		if (!name) return
+
+		try {
+			await axios.post(API_URL, {
+				name,
+				elements,
+				createdAt: new Date().toISOString(),
+			})
+			alert('Landing page saved successfully!')
+		} catch (error) {
+			console.error('Error saving landing page:', error)
+			alert('Error saving landing page')
+		}
+	}
 
 	const handleDrop = item => {
 		setElements(prevElements => [
@@ -182,6 +207,7 @@ ${elementsHTML}
 					onColorChange={handleColorChange}
 					onDeleteElement={handleDeleteElement}
 					onSave={handleSaveHTML}
+					onSaveToServer={handleSaveToServer}
 				/>
 				<Workspace
 					elements={elements}
