@@ -31,4 +31,13 @@
 			text-decoration: none;
 		}
 	}
+
+	.deleteButton {
+		border-radius: 3px;
+		background-color: $delete-bgcolor;
+		color: white;
+		padding: 5px 18.5px;
+		font-size: 14px;
+		margin-left: 5px;
+	}
 }

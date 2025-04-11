@@ -69,7 +69,7 @@ const LandingEditor = ({ loadSavedLanding }) => {
 				await axios.patch(`${API_BASE}/landingPages/${id}`, data)
 				alert('Landing page updated successfully!')
 			} else {
-				const response = await axios.post(API_URL, {
+				const response = await axios.post(`${API_BASE}/landingPages`, {
 					...data,
 					createdAt: new Date().toISOString(),
 				})
